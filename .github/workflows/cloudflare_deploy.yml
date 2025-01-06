@@ -9,6 +9,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: webapp
     permissions:
       contents: read
       deployments: write
@@ -24,15 +27,12 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: install
-        working-directory: ./webapp
       
       - name: Install vite
         run: yarn install -G vite
-        working-directory: ./webapp
 
       - name: Build project
         run: yarn build
-        working-directory: ./webapp
       
       - name: Publish
         uses: cloudflare/pages-action@1
@@ -41,4 +41,3 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: tinytoolcrate
           directory: dist
-        working-directory: ./webapp
