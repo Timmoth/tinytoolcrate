@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import TextField from '../fields/TextField';
+import { useState, useEffect } from 'react'
+import TextField from '../fields/TextField'
 
 function EscapeStringUtil() {
-  const [currentText, setCurrentText] = useState<string>('');
-  const [encodedText, setEncodedText] = useState<string>('');
+  const [currentText, setCurrentText] = useState<string>('')
+  const [encodedText, setEncodedText] = useState<string>('')
 
   const handleContentChange = (newContent: string) => {
-    setCurrentText(newContent);
-  };
-  
+    setCurrentText(newContent)
+  }
+
   useEffect(() => {
     try {
-      const encoded = JSON.stringify(currentText).slice(1, -1); 
-      setEncodedText(encoded);
+      const encoded = JSON.stringify(currentText).slice(1, -1)
+      setEncodedText(encoded)
     } catch (error) {
-      setEncodedText("Error encoding string");
-      console.error('Error encoding string:', error);
+      setEncodedText('Error encoding string')
+      console.error('Error encoding string:', error)
     }
-  }, [currentText]);
+  }, [currentText])
 
   return (
     <>
@@ -29,15 +29,15 @@ function EscapeStringUtil() {
         isCopyable={true}
         isMultiline={true}
       />
-      <TextField 
+      <TextField
         label="Encoded string"
-        content={encodedText}        
+        content={encodedText}
         isReadonly={true}
         isCopyable={true}
         isMultiline={true}
-      />  
+      />
     </>
-  );
+  )
 }
 
-export default EscapeStringUtil;
+export default EscapeStringUtil

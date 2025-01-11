@@ -1,30 +1,30 @@
-import { useState, useEffect } from 'react';
-import TextField from '../fields/TextField';
+import { useState, useEffect } from 'react'
+import TextField from '../fields/TextField'
 
 function CountOccurrences() {
-  const [currentText, setCurrentText] = useState<string>('');
-  const [findTerm, setFindTerm] = useState<string>('');
-  const [occurrences, setOccurrences] = useState<number>(0);
+  const [currentText, setCurrentText] = useState<string>('')
+  const [findTerm, setFindTerm] = useState<string>('')
+  const [occurrences, setOccurrences] = useState<number>(0)
 
   const handleContentChange = (newContent: string) => {
-    setCurrentText(newContent);
-  };
+    setCurrentText(newContent)
+  }
 
   useEffect(() => {
     if (findTerm.trim() === '') {
-      setOccurrences(0);
-      return;
+      setOccurrences(0)
+      return
     }
 
     try {
-      const regex = new RegExp(findTerm, 'g'); 
-      const matches = currentText.match(regex);
-      setOccurrences(matches ? matches.length : 0);
+      const regex = new RegExp(findTerm, 'g')
+      const matches = currentText.match(regex)
+      setOccurrences(matches ? matches.length : 0)
     } catch (e) {
-      console.error('Invalid regular expression:', e);
-      setOccurrences(0);
+      console.error('Invalid regular expression:', e)
+      setOccurrences(0)
     }
-  }, [currentText, findTerm]);
+  }, [currentText, findTerm])
 
   return (
     <>
@@ -55,7 +55,7 @@ function CountOccurrences() {
         />
       </div>
     </>
-  );
+  )
 }
 
-export default CountOccurrences;
+export default CountOccurrences

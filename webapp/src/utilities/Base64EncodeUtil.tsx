@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import TextField from '../fields/TextField';
+import { useState, useEffect } from 'react'
+import TextField from '../fields/TextField'
 
 function Base64EncodeUtil() {
-  const [currentText, setCurrentText] = useState<string>('');
-  const [encodedText, setEncodedText] = useState<string>('');
+  const [currentText, setCurrentText] = useState<string>('')
+  const [encodedText, setEncodedText] = useState<string>('')
 
   const handleContentChange = (newContent: string) => {
-    setCurrentText(newContent);
-  };
-  
+    setCurrentText(newContent)
+  }
+
   useEffect(() => {
     try {
-      const encoded = btoa(currentText);
-      setEncodedText(encoded);
+      const encoded = btoa(currentText)
+      setEncodedText(encoded)
     } catch (error) {
-      setEncodedText("Error encoding to base64");
-      console.error('Error encoding to base64:', error);
+      setEncodedText('Error encoding to base64')
+      console.error('Error encoding to base64:', error)
     }
-  }, [currentText]);
+  }, [currentText])
 
   return (
     <>
@@ -25,16 +25,19 @@ function Base64EncodeUtil() {
         label="enter text"
         content={currentText}
         onContentChange={handleContentChange}
-               isReadonly={false}
+        isReadonly={false}
         isCopyable={true}
         isMultiline={true}
       />
-      <TextField label="encoded" content={encodedText}
+      <TextField
+        label="encoded"
+        content={encodedText}
         isReadonly={true}
         isCopyable={true}
-        isMultiline={true}/>  
+        isMultiline={true}
+      />
     </>
-  );
+  )
 }
 
-export default Base64EncodeUtil;
+export default Base64EncodeUtil

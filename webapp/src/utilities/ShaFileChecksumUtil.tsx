@@ -1,73 +1,76 @@
-import { useState } from 'react';
-import TextField from '../fields/TextField';
+import { useState } from 'react'
+import TextField from '../fields/TextField'
 
 function ShaFileChecksumUtil() {
-  const [hashes, setHashes] = useState<{ [key: string]: string }>({});
-  const [error, setError] = useState<string | null>(null);
+  const [hashes, setHashes] = useState<{ [key: string]: string }>({})
+  const [error, setError] = useState<string | null>(null)
 
   const handleFileUpload = async (file: File) => {
     if (!file) {
-      setError('No file selected.');
-      return;
+      setError('No file selected.')
+      return
     }
-    setError(null);
+    setError(null)
 
-    const reader = new FileReader();
+    const reader = new FileReader()
 
     reader.onload = async () => {
-      const binaryData = reader.result as ArrayBuffer;
+      const binaryData = reader.result as ArrayBuffer
 
       try {
-        const sha1Hash = await computeHash(binaryData, 'SHA-1');
-        const sha256Hash = await computeHash(binaryData, 'SHA-256');
-        const sha384Hash = await computeHash(binaryData, 'SHA-384');
-        const sha512Hash = await computeHash(binaryData, 'SHA-512');
+        const sha1Hash = await computeHash(binaryData, 'SHA-1')
+        const sha256Hash = await computeHash(binaryData, 'SHA-256')
+        const sha384Hash = await computeHash(binaryData, 'SHA-384')
+        const sha512Hash = await computeHash(binaryData, 'SHA-512')
 
         setHashes({
           'SHA-1': sha1Hash,
           'SHA-256': sha256Hash,
           'SHA-384': sha384Hash,
           'SHA-512': sha512Hash,
-        });
+        })
       } catch (e) {
-        console.error('Error computing hashes:', e);
-        setError('Failed to compute hashes.');
+        console.error('Error computing hashes:', e)
+        setError('Failed to compute hashes.')
       }
-    };
+    }
 
     reader.onerror = () => {
-      console.error('File reading failed.');
-      setError('Failed to read the file.');
-    };
+      console.error('File reading failed.')
+      setError('Failed to read the file.')
+    }
 
-    reader.readAsArrayBuffer(file);
-  };
+    reader.readAsArrayBuffer(file)
+  }
 
-  const computeHash = async (data: ArrayBuffer, algorithm: string): Promise<string> => {
-    const hashBuffer = await crypto.subtle.digest(algorithm, data);
+  const computeHash = async (
+    data: ArrayBuffer,
+    algorithm: string
+  ): Promise<string> => {
+    const hashBuffer = await crypto.subtle.digest(algorithm, data)
     return Array.from(new Uint8Array(hashBuffer))
       .map((byte) => byte.toString(16).padStart(2, '0'))
-      .join('');
-  };
+      .join('')
+  }
 
   const handleDragOver = (event: React.DragEvent) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   const handleDrop = (event: React.DragEvent) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
+    event.preventDefault()
+    const file = event.dataTransfer.files[0]
     if (file) {
-      handleFileUpload(file);
+      handleFileUpload(file)
     }
-  };
+  }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0]
     if (file) {
-      handleFileUpload(file);
+      handleFileUpload(file)
     }
-  };
+  }
 
   return (
     <>
@@ -97,7 +100,8 @@ function ShaFileChecksumUtil() {
               />
             </svg>
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Click to upload</span> or drag and drop
+              <span className="font-semibold">Click to upload</span> or drag and
+              drop
             </p>
           </div>
           <input
@@ -114,18 +118,18 @@ function ShaFileChecksumUtil() {
           <strong>Error:</strong> {error}
         </p>
       )}
-        {Object.entries(hashes).map(([algorithm, hash]) => (
-          <TextField
-            key={algorithm}
-            label={`${algorithm} Hash`}
-            content={hash}
-            isReadonly={true}
-            isCopyable={true}
-            isMultiline={false}
-          />
-        ))}
+      {Object.entries(hashes).map(([algorithm, hash]) => (
+        <TextField
+          key={algorithm}
+          label={`${algorithm} Hash`}
+          content={hash}
+          isReadonly={true}
+          isCopyable={true}
+          isMultiline={false}
+        />
+      ))}
     </>
-  );
+  )
 }
 
-export default ShaFileChecksumUtil;
+export default ShaFileChecksumUtil

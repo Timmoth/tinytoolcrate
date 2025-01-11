@@ -1,20 +1,26 @@
-import { useState } from 'react';
-import { PanelType } from './Panel';
+import { useState } from 'react'
+import { PanelType } from './Panel'
 
-function Panel({ onPanelSelect }: { onPanelSelect: (selectedPanel: PanelType) => void }) {
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-  const [subDropdownOpen, setSubDropdownOpen] = useState<boolean>(false);
+function Panel({
+  onPanelSelect,
+}: {
+  onPanelSelect: (selectedPanel: PanelType) => void
+}) {
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
+  const [subDropdownOpen, setSubDropdownOpen] = useState<boolean>(false)
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+    setDropdownOpen(!dropdownOpen)
+  }
 
   const handleSubmenuClick = (panelType: PanelType) => {
-    setDropdownOpen(false);
-    onPanelSelect(panelType); 
-  };
+    setDropdownOpen(false)
+    onPanelSelect(panelType)
+  }
 
-  const panelTypes = Object.values(PanelType).filter(value => value !== PanelType.None); // Exclude 'None' from the list
+  const panelTypes = Object.values(PanelType).filter(
+    (value) => value !== PanelType.None
+  ) // Exclude 'None' from the list
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -97,7 +103,7 @@ function Panel({ onPanelSelect }: { onPanelSelect: (selectedPanel: PanelType) =>
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Panel;
+export default Panel

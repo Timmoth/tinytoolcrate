@@ -1,32 +1,35 @@
-import { useState, useEffect } from 'react';
-import TextField from '../fields/TextField';
+import { useState, useEffect } from 'react'
+import TextField from '../fields/TextField'
 
 function UnixTimeUtil() {
-  const [unixTime, setUnixTime] = useState<number>(Date.now());
+  const [unixTime, setUnixTime] = useState<number>(Date.now())
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setUnixTime(Date.now());
-    }, 100);
+      setUnixTime(Date.now())
+    }, 100)
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
-      <>
-      <TextField 
-      label='seconds' 
-      content={Math.floor(unixTime / 1000).toString()}
+    <>
+      <TextField
+        label="seconds"
+        content={Math.floor(unixTime / 1000).toString()}
         isReadonly={true}
         isCopyable={true}
-        isMultiline={false}/>
-      <TextField label='millis' 
-      content={unixTime.toString()}      
+        isMultiline={false}
+      />
+      <TextField
+        label="millis"
+        content={unixTime.toString()}
         isReadonly={true}
         isCopyable={true}
-        isMultiline={false}/>
-      </>
-  );
+        isMultiline={false}
+      />
+    </>
+  )
 }
 
-export default UnixTimeUtil;
+export default UnixTimeUtil

@@ -1,23 +1,23 @@
-import { useState } from 'react';
-import TextField from '../fields/TextField';
+import { useState } from 'react'
+import TextField from '../fields/TextField'
 
 function FormatJsonUtil() {
-  const [inputJson, setInputJson] = useState<string>('');
-  const [formattedJson, setFormattedJson] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const [inputJson, setInputJson] = useState<string>('')
+  const [formattedJson, setFormattedJson] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
 
   const handleInputChange = (newInput: string) => {
-    setInputJson(newInput);
-    setError(null);
+    setInputJson(newInput)
+    setError(null)
 
     try {
-      const parsed = JSON.parse(newInput);
-      setFormattedJson(JSON.stringify(parsed, null, 2));
+      const parsed = JSON.parse(newInput)
+      setFormattedJson(JSON.stringify(parsed, null, 2))
     } catch (e) {
-      setFormattedJson('');
-      setError('Invalid JSON');
+      setFormattedJson('')
+      setError('Invalid JSON')
     }
-  };
+  }
 
   return (
     <>
@@ -40,7 +40,7 @@ function FormatJsonUtil() {
         isMultiline={true}
       />
     </>
-  );
+  )
 }
 
-export default FormatJsonUtil;
+export default FormatJsonUtil

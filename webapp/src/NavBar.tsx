@@ -1,60 +1,76 @@
-import { useEffect, useState } from 'react';
-import { PanelType } from './Panel';
+import { useEffect, useState } from 'react'
+import { PanelType } from './Panel'
 
 type CategoryDictionary = {
-  [key: string]: PanelType[];
-};
+  [key: string]: PanelType[]
+}
 
 const Categories: CategoryDictionary = {
-  text: [PanelType.Base64Encode, PanelType.Base64Decode, PanelType.UrlEncode, PanelType.UrlDecode, PanelType.LineCount, PanelType.FindAndReplace, PanelType.CountOccurrences, PanelType.EscapeString, PanelType.UnescapeString],
+  text: [
+    PanelType.Base64Encode,
+    PanelType.Base64Decode,
+    PanelType.UrlEncode,
+    PanelType.UrlDecode,
+    PanelType.LineCount,
+    PanelType.FindAndReplace,
+    PanelType.CountOccurrences,
+    PanelType.EscapeString,
+    PanelType.UnescapeString,
+  ],
   json: [PanelType.JwtDecode, PanelType.FormatJson],
   file: [PanelType.ShaFileChecksum],
   time: [PanelType.UnixTime],
-  misc: [PanelType.Guid, PanelType.Ip]
-};
+  misc: [PanelType.Guid, PanelType.Ip, PanelType.QrCode],
+}
 
-function NavBar({ onPanelSelect }: { onPanelSelect: (selectedPanel: PanelType) => void }) {
-  const [activeButton, setActiveButton] = useState<string | null>(null);
-  const [timer, setTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+function NavBar({
+  onPanelSelect,
+}: {
+  onPanelSelect: (selectedPanel: PanelType) => void
+}) {
+  const [activeButton, setActiveButton] = useState<string | null>(null)
+  const [timer, setTimer] = useState<ReturnType<typeof setTimeout> | null>(null)
 
-  const TIMEOUT_DURATION = 250;
+  const TIMEOUT_DURATION = 250
 
   const handleMouseEnterMenuButton = (key: string) => {
-    setActiveButton(key);
+    setActiveButton(key)
     if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
+      clearTimeout(timer)
+      setTimer(null)
     }
-  };
+  }
 
   const handleMouseLeaveMenuButton = (key: string) => {
     if (key === activeButton) {
       const newTimer = setTimeout(() => {
-        setActiveButton((currentKey) => (currentKey === key ? null : currentKey));
-      }, TIMEOUT_DURATION);
+        setActiveButton((currentKey) =>
+          currentKey === key ? null : currentKey
+        )
+      }, TIMEOUT_DURATION)
 
-      setTimer(newTimer);
+      setTimer(newTimer)
     }
-  };
+  }
 
   const handleMouseEnterMenu = () => {
     if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
+      clearTimeout(timer)
+      setTimer(null)
     }
-  };
+  }
 
   const handleMouseLeaveMenu = () => {
-    setActiveButton(null);
-  };
+    setActiveButton(null)
+  }
 
   useEffect(() => {
     return () => {
       if (timer) {
-        clearTimeout(timer);
+        clearTimeout(timer)
       }
-    };
-  }, [timer]);
+    }
+  }, [timer])
 
   const renderDropdown = (panelTypes: PanelType[]) => (
     <div
@@ -78,13 +94,15 @@ function NavBar({ onPanelSelect }: { onPanelSelect: (selectedPanel: PanelType) =
         ))}
       </ul>
     </div>
-  );
+  )
 
   return (
     <div>
       <div className="fixed top-0 left-0 z-50 w-full bg-white">
         <div className="flex justify-center items-center">
-          <h1 className="text-2xl font-bold text-blue-500 p-2">tiny tool crate</h1>
+          <h1 className="text-2xl font-bold text-blue-500 p-2">
+            tiny tool crate
+          </h1>
         </div>
 
         <div className="flex items-center justify-center h-full font-medium">
@@ -106,7 +124,7 @@ function NavBar({ onPanelSelect }: { onPanelSelect: (selectedPanel: PanelType) =
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default NavBar;
+export default NavBar

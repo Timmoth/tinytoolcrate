@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import TextField from '../fields/TextField';
+import { useState, useEffect } from 'react'
+import TextField from '../fields/TextField'
 
 function Base64DecodeUtil() {
-  const [encodedText, setEncodedText] = useState<string>('');
-  const [decodedText, setDecodedText] = useState<string>('');
+  const [encodedText, setEncodedText] = useState<string>('')
+  const [decodedText, setDecodedText] = useState<string>('')
 
   const handleContentChange = (newContent: string) => {
-    setEncodedText(newContent);
-  };
+    setEncodedText(newContent)
+  }
 
   useEffect(() => {
     try {
-      const decoded = atob(encodedText);
-      setDecodedText(decoded);
+      const decoded = atob(encodedText)
+      setDecodedText(decoded)
     } catch (error) {
-      setDecodedText("Error decoding from base64");
-      console.error('Error decoding from base64:', error);
+      setDecodedText('Error decoding from base64')
+      console.error('Error decoding from base64:', error)
     }
-  }, [encodedText]);
+  }, [encodedText])
 
   return (
     <>
@@ -29,15 +29,15 @@ function Base64DecodeUtil() {
         isCopyable={true}
         isMultiline={true}
       />
-      <TextField 
-      label="decoded"
-       content={decodedText}
+      <TextField
+        label="decoded"
+        content={decodedText}
         isReadonly={true}
         isCopyable={true}
         isMultiline={true}
-        />  
+      />
     </>
-  );
+  )
 }
 
-export default Base64DecodeUtil;
+export default Base64DecodeUtil

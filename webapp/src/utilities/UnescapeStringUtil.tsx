@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import TextField from '../fields/TextField';
+import { useState, useEffect } from 'react'
+import TextField from '../fields/TextField'
 
 function UnescapeStringUtil() {
-  const [encodedText, setEncodedText] = useState<string>('');
-  const [decodedText, setDecodedText] = useState<string>('');
+  const [encodedText, setEncodedText] = useState<string>('')
+  const [decodedText, setDecodedText] = useState<string>('')
 
   const handleContentChange = (newContent: string) => {
-    setEncodedText(newContent);
-  };
+    setEncodedText(newContent)
+  }
 
   useEffect(() => {
     try {
-      const decoded = JSON.parse(`"${encodedText}"`);
-      setDecodedText(decoded);
+      const decoded = JSON.parse(`"${encodedText}"`)
+      setDecodedText(decoded)
     } catch (error) {
-      setDecodedText("Error decoding from base64");
-      console.error('Error decoding from base64:', error);
+      setDecodedText('Error decoding from base64')
+      console.error('Error decoding from base64:', error)
     }
-  }, [encodedText]);
+  }, [encodedText])
 
   return (
     <>
@@ -25,17 +25,19 @@ function UnescapeStringUtil() {
         label="enter encoded"
         content={encodedText}
         onContentChange={handleContentChange}
-                       isReadonly={false}
+        isReadonly={false}
         isCopyable={true}
         isMultiline={true}
       />
-      <TextField label="decoded" 
-      content={decodedText}         
+      <TextField
+        label="decoded"
+        content={decodedText}
         isReadonly={true}
         isCopyable={true}
-        isMultiline={true}/>  
+        isMultiline={true}
+      />
     </>
-  );
+  )
 }
 
-export default UnescapeStringUtil;
+export default UnescapeStringUtil
