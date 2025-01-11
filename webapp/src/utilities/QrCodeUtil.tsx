@@ -9,7 +9,13 @@ const QRCodeGenerator: React.FC = () => {
   const qrCodeId = useMemo(() => `QRCode-${Date.now()}-${Math.random()}`, [])
 
   const handleDownloadClicked = () => {
-    const svg = document.getElementById(qrCodeId)
+    const svg = document.getElementById(qrCodeId) as SVGElement | null
+
+    if (!svg) {
+      console.error('SVG element not found')
+      return
+    }
+
     const svgData = new XMLSerializer().serializeToString(svg)
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
