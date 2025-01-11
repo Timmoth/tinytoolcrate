@@ -41,6 +41,20 @@ function App() {
     setPanels(initialPanels)
   }, [])
 
+  const isWide = (p: PanelType) => {
+    switch (p) {
+      case PanelType.PlotGraph:
+        return true
+    }
+  }
+
+  const isTall = (p: PanelType) => {
+    switch (p) {
+      case PanelType.PlotGraph:
+        return true
+    }
+  }
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="m-4">
@@ -48,42 +62,51 @@ function App() {
       </div>
       <div className="mt-16 w-full text-white max-w-8xl">
         <div className="grid gap-4 m-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {panels.map((panel, index) => (
-            <div
-              key={index}
-              className="relative flex flex-col p-4 border border-gray-100 rounded-lg shadow-sm bg-gray-700 h-full"
-            >
-              <button
-                type="button"
-                onClick={() => handleClosePanel(index)}
-                className="absolute top-2 right-2 inline-flex items-center p-1 text-sm text-pink-400 bg-transparent rounded-sm hover:bg-pink-200 hover:text-pink-900 dark:hover:bg-pink-800 dark:hover:text-pink-300"
-                aria-label="Remove"
+          {panels.map((panel, index) => {
+            const gridColumnSpan = isWide(panel)
+              ? 'col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2'
+              : 'col-span-1'
+            const gridRowSpan = isTall(panel)
+              ? 'row-span-1 sm:row-span-2 md:row-span-2 lg:row-span-2'
+              : 'row-span-1'
+
+            return (
+              <div
+                key={index}
+                className={`relative flex flex-col p-4 border border-gray-100 rounded-lg shadow-sm bg-gray-700 h-full ${gridColumnSpan} ${gridRowSpan}`}
               >
-                <svg
-                  className="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
+                <button
+                  type="button"
+                  onClick={() => handleClosePanel(index)}
+                  className="absolute top-2 right-2 inline-flex items-center p-1 text-sm text-pink-400 bg-transparent rounded-sm hover:bg-pink-200 hover:text-pink-900 dark:hover:bg-pink-800 dark:hover:text-pink-300"
+                  aria-label="Remove"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Remove</span>
-              </button>
-              <h2 className="text-center text-white text-lg font-bold mb-4">
-                {panel}
-              </h2>
-              <div className="flex-grow flex flex-col items-center justify-start space-y-4 w-full h-full">
-                <Panel selectedPanel={panel} />
+                  <svg
+                    className="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Remove</span>
+                </button>
+                <h2 className="text-center text-white text-lg font-bold mb-4">
+                  {panel}
+                </h2>
+                <div className="flex-grow flex flex-col items-stretch justify-start space-y-4 w-full h-full">
+                  <Panel selectedPanel={panel} />
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>

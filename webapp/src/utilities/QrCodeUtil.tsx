@@ -33,7 +33,7 @@ const QRCodeGenerator: React.FC = () => {
     img.src = `data:image/svg+xml;base64,${btoa(svgData)}`
   }
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col items-center space-y-4">
       <TextField
         label="Content"
         content={qrCodeContent}

@@ -20,7 +20,7 @@ const Categories: CategoryDictionary = {
   json: [PanelType.JwtDecode, PanelType.FormatJson],
   file: [PanelType.ShaFileChecksum],
   time: [PanelType.UnixTime],
-  misc: [PanelType.Guid, PanelType.Ip, PanelType.QrCode],
+  misc: [PanelType.Guid, PanelType.Ip, PanelType.QrCode, PanelType.PlotGraph],
 }
 
 function NavBar({
