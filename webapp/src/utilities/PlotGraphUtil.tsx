@@ -20,7 +20,7 @@ const PlotGraph: React.FC = () => {
   const drawPlot = () => {
     try {
       const expr = compile(expression)
-      const length = 100
+      const length = 1000
       const mX = Number(minX)
       const increment = (Number(maxX) - mX) / length
       const xValues = Array.from(

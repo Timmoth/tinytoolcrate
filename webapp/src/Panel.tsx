@@ -14,6 +14,7 @@ import UnescapeStringUtil from './utilities/UnescapeStringUtil'
 import ShaFileChecksumUtil from './utilities/ShaFileChecksumUtil'
 import QRCodeGenerator from './utilities/QrCodeUtil'
 import PlotGraph from './utilities/PlotGraphUtil'
+import CalculatorUtil from './utilities/CalculatorUtil'
 
 export enum PanelType {
   None = 'none',
@@ -34,6 +35,7 @@ export enum PanelType {
   ShaFileChecksum = 'SHA file checksum',
   QrCode = 'Qr code',
   PlotGraph = 'Plot graph',
+  Calculator = 'Calculator',
 }
 
 function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
@@ -73,6 +75,8 @@ function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
         return <QRCodeGenerator />
       case PanelType.PlotGraph:
         return <PlotGraph />
+      case PanelType.Calculator:
+        return <CalculatorUtil />
       default:
         return <div>Invalid selection</div>
     }

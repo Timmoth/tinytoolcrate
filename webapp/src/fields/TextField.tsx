@@ -1,41 +1,52 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from 'react'
 
 function TextField({
   label,
   content,
   onContentChange,
+  onContentKeyUp,
   isReadonly,
   isCopyable,
   isMultiline,
 }: {
-  label: string;
-  content: string;
-  onContentChange?: (newContent: string) => void;
-  isReadonly: boolean;
-  isCopyable: boolean;
-  isMultiline: boolean;
+  label: string
+  content: string
+  onContentChange?: (newContent: string) => void
+  onContentKeyUp?: (key: string) => void
+  isReadonly: boolean
+  isCopyable: boolean
+  isMultiline: boolean
 }) {
-  const [copied, setCopied] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false)
 
   const copyToClipboard = () => {
     navigator.clipboard
       .writeText(content)
       .then(() => {
-        setCopied(true);
+        setCopied(true)
         setTimeout(() => {
-          setCopied(false);
-        }, 1000);
+          setCopied(false)
+        }, 1000)
       })
       .catch((err) => {
-        console.error("Error copying to clipboard:", err);
-      });
-  };
+        console.error('Error copying to clipboard:', err)
+      })
+  }
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChange = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     if (!isReadonly && onContentChange) {
-      onContentChange(event.target.value);
+      onContentChange(event.target.value)
     }
-  };
+  }
+  const handleKeyUp = (
+    event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    if (onContentKeyUp) {
+      onContentKeyUp(event.key)
+    }
+  }
 
   return (
     <div className="w-full relative">
@@ -89,6 +100,7 @@ function TextField({
           className="bg-gray-50 border border-gray-300 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
           value={content}
           onChange={handleChange}
+          onKeyUp={handleKeyUp}
           readOnly={isReadonly}
           rows={6}
         />
@@ -98,11 +110,12 @@ function TextField({
           className="bg-gray-50 border border-gray-300 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
           value={content}
           onChange={handleChange}
+          onKeyUp={handleKeyUp}
           readOnly={isReadonly}
         />
       )}
     </div>
-  );
+  )
 }
 
-export default TextField;
+export default TextField
