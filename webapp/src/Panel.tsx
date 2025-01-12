@@ -21,6 +21,7 @@ import EncodeBase64FileUtil from './utilities/EncodeBase64FileUtil'
 import CountdownTimer from './utilities/CountDownUtil'
 import AlarmUtil from './utilities/AlarmUtil'
 import ColorPickerUtil from './utilities/ColorPickerUtil'
+import FindAndReplaceUtil from './utilities/FindAndReplaceUtil'
 
 export enum PanelType {
   None = 'none',
@@ -75,6 +76,8 @@ function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
         return <LineCountUtil />
       case PanelType.CountOccurrences:
         return <CountOccurrences />
+      case PanelType.FindAndReplace:
+        return <FindAndReplaceUtil />
       case PanelType.FormatJson:
         return <FormatJsonUtil />
       case PanelType.EscapeString:

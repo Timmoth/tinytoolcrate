@@ -52,7 +52,7 @@ function TextField({
     <div className="w-full relative">
       {/* Label and Copy Button positioned along the top border */}
       <div className="relative flex items-center">
-        <label className="absolute text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 px-1 z-10 left-2.5 top-0 -translate-y-1/2">
+        <label className="absolute text-sm text-gray-400 bg-gray-700 px-1 z-10 left-2.5 top-0 -translate-y-1/2">
           {label}
         </label>
 
@@ -60,12 +60,12 @@ function TextField({
         {isCopyable && (
           <button
             onClick={copyToClipboard}
-            className="bg-gray-700 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md p-1"
+            className="bg-gray-700 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:bg-gray-800 rounded-md p-1"
             aria-label="Copy to clipboard"
           >
             {copied ? (
               <svg
-                className="w-3.5 h-3.5 text-blue-700 dark:text-blue-500"
+                className="w-3.5 h-3.5 text-blue-500"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -97,7 +97,7 @@ function TextField({
       {/* Input Field */}
       {isMultiline ? (
         <textarea
-          className="bg-gray-50 border border-gray-300 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
+          className="border text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 text-gray-400"
           value={content}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
@@ -107,7 +107,7 @@ function TextField({
       ) : (
         <input
           type="text"
-          className="bg-gray-50 border border-gray-300 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
+          className="border text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 text-gray-400"
           value={content}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
