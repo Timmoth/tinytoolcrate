@@ -18,6 +18,7 @@ import CalculatorUtil from './utilities/CalculatorUtil'
 import ClockUtil from './utilities/ClockUtil'
 import ViewBase64EncodedImageUtil from './utilities/ViewBase64EncodedImageUtil'
 import EncodeBase64FileUtil from './utilities/EncodeBase64FileUtil'
+import CountdownTimer from './utilities/CountDownUtil'
 
 export enum PanelType {
   None = 'none',
@@ -42,6 +43,7 @@ export enum PanelType {
   Clock = 'Clock',
   Base64EncodeFile = 'Base64 encode file',
   ViewBase64Image = 'Base64 encoded image',
+  CountDownTimer = 'Countdown',
 }
 
 function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
@@ -89,6 +91,8 @@ function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
         return <EncodeBase64FileUtil />
       case PanelType.ViewBase64Image:
         return <ViewBase64EncodedImageUtil />
+      case PanelType.CountDownTimer:
+        return <CountdownTimer />
       default:
         return <div>Invalid selection</div>
     }

@@ -24,7 +24,7 @@ const Categories: CategoryDictionary = {
     PanelType.Base64EncodeFile,
     PanelType.ViewBase64Image,
   ],
-  time: [PanelType.UnixTime, PanelType.Clock],
+  time: [PanelType.UnixTime, PanelType.Clock, PanelType.CountDownTimer],
   misc: [
     PanelType.Guid,
     PanelType.Ip,
