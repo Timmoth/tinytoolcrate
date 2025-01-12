@@ -84,7 +84,7 @@ function CountdownTimer() {
     <div className="flex flex-col items-center space-y-6">
       <div className="flex items-center space-x-4 text-3xl font-bold">
         {['Hours', 'Minutes', 'Seconds'].map((label, index) => (
-          <div key={label} className="flex flex-col items-center space-y-2">
+          <div key={index} className="flex flex-col items-center space-y-2">
             <button
               className="text-sm"
               onClick={() => {
