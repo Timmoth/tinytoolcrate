@@ -20,6 +20,7 @@ import ViewBase64EncodedImageUtil from './utilities/ViewBase64EncodedImageUtil'
 import EncodeBase64FileUtil from './utilities/EncodeBase64FileUtil'
 import CountdownTimer from './utilities/CountDownUtil'
 import AlarmUtil from './utilities/AlarmUtil'
+import ColorPickerUtil from './utilities/ColorPickerUtil'
 
 export enum PanelType {
   None = 'none',
@@ -46,6 +47,7 @@ export enum PanelType {
   ViewBase64Image = 'Base64 encoded image',
   CountDownTimer = 'Countdown',
   Alarm = 'Alarm',
+  Color = 'Color picker',
 }
 
 function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
@@ -97,6 +99,8 @@ function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
         return <CountdownTimer />
       case PanelType.Alarm:
         return <AlarmUtil />
+      case PanelType.Color:
+        return <ColorPickerUtil />
       default:
         return <div>Invalid selection</div>
     }

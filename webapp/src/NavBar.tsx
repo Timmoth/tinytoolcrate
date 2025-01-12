@@ -36,6 +36,7 @@ const Categories: CategoryDictionary = {
     PanelType.QrCode,
     PanelType.PlotGraph,
     PanelType.Calculator,
+    PanelType.Color,
   ],
 }
 
