@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { PanelType } from './Panel'
+import ghLogo from './assets/github-mark.svg'
 
 type CategoryDictionary = {
   [key: string]: PanelType[]
@@ -18,8 +19,12 @@ const Categories: CategoryDictionary = {
     PanelType.UnescapeString,
   ],
   json: [PanelType.JwtDecode, PanelType.FormatJson],
-  file: [PanelType.ShaFileChecksum],
-  time: [PanelType.UnixTime],
+  file: [
+    PanelType.ShaFileChecksum,
+    PanelType.Base64EncodeFile,
+    PanelType.ViewBase64Image,
+  ],
+  time: [PanelType.UnixTime, PanelType.Clock],
   misc: [
     PanelType.Guid,
     PanelType.Ip,
@@ -105,10 +110,18 @@ function NavBar({
   return (
     <div>
       <div className="fixed top-0 left-0 z-50 w-full bg-white">
-        <div className="flex justify-center items-center">
+        <div className="relative flex justify-center items-center">
           <h1 className="text-2xl font-bold text-blue-500 p-2">
-            tiny tool crate
+            tinytoolcrate
           </h1>
+          <a
+            href="https://github.com/Timmoth/tinytoolcrate"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-4"
+          >
+            <img className="w-6" src={ghLogo} alt="GitHub Logo" />
+          </a>
         </div>
 
         <div className="flex items-center justify-center h-full font-medium">

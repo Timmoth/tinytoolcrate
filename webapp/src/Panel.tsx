@@ -15,6 +15,9 @@ import ShaFileChecksumUtil from './utilities/ShaFileChecksumUtil'
 import QRCodeGenerator from './utilities/QrCodeUtil'
 import PlotGraph from './utilities/PlotGraphUtil'
 import CalculatorUtil from './utilities/CalculatorUtil'
+import ClockUtil from './utilities/ClockUtil'
+import ViewBase64EncodedImageUtil from './utilities/ViewBase64EncodedImageUtil'
+import EncodeBase64FileUtil from './utilities/EncodeBase64FileUtil'
 
 export enum PanelType {
   None = 'none',
@@ -36,6 +39,9 @@ export enum PanelType {
   QrCode = 'Qr code',
   PlotGraph = 'Plot graph',
   Calculator = 'Calculator',
+  Clock = 'Clock',
+  Base64EncodeFile = 'Base64 encode file',
+  ViewBase64Image = 'Base64 encoded image',
 }
 
 function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
@@ -77,6 +83,12 @@ function Panel({ selectedPanel }: { selectedPanel: PanelType }) {
         return <PlotGraph />
       case PanelType.Calculator:
         return <CalculatorUtil />
+      case PanelType.Clock:
+        return <ClockUtil />
+      case PanelType.Base64EncodeFile:
+        return <EncodeBase64FileUtil />
+      case PanelType.ViewBase64Image:
+        return <ViewBase64EncodedImageUtil />
       default:
         return <div>Invalid selection</div>
     }
