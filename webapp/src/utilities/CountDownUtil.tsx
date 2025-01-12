@@ -9,7 +9,9 @@ function CountdownTimer() {
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
 
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null)
+  const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout> | null>(
+    null
+  )
 
   const increment = (
     setter: React.Dispatch<React.SetStateAction<number>>,
