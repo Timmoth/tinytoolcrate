@@ -8,3 +8,9 @@ cd tinytoolcrate/webapp
 yarn
 yarn dev
 ```
+
+<p align="center">
+   <div style="width:640;height:320">
+       <img style="width: inherit" src="./preview.png">
+</div>
+</p>
