@@ -1,3 +1,229 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --c-bg: 250 250 250;
+  --c-surface: 255 255 255;
+  --c-input: 255 255 255;
+  --c-border: 228 228 231;
+  --c-text: 24 24 27;
+  --c-subtle: 113 113 122;
+  --c-faint: 161 161 170;
+  --c-hover: 244 244 245;
+  --c-accent: 79 70 229;
+
+  /* syntax */
+  --s-comment: 110 119 129;
+  --s-string: 10 48 105;
+  --s-number: 5 80 174;
+  --s-keyword: 207 34 46;
+  --s-type: 149 56 0;
+  --s-function: 130 80 223;
+  --s-property: 5 80 174;
+  --s-operator: 207 34 46;
+  --s-punctuation: 87 96 106;
+  --s-regexp: 11 114 92;
+  --s-tag: 17 99 41;
+  --s-attr: 5 80 174;
+}
+
+.dark {
+  --c-bg: 9 9 11;
+  --c-surface: 24 24 27;
+  --c-input: 9 9 11;
+  --c-border: 39 39 42;
+  --c-text: 228 228 231;
+  --c-subtle: 161 161 170;
+  --c-faint: 113 113 122;
+  --c-hover: 39 39 42;
+  --c-accent: 99 102 241;
+
+  /* syntax */
+  --s-comment: 139 148 158;
+  --s-string: 165 214 255;
+  --s-number: 121 192 255;
+  --s-keyword: 255 123 114;
+  --s-type: 255 166 87;
+  --s-function: 210 168 255;
+  --s-property: 121 192 255;
+  --s-operator: 255 123 114;
+  --s-punctuation: 139 148 158;
+  --s-regexp: 126 231 135;
+  --s-tag: 126 231 135;
+  --s-attr: 121 192 255;
+}
+
+/*
+ * Syntax token colours. Deliberately outside @layer components: the class
+ * names are composed at runtime, so tailwind would not see them to keep.
+ */
+.tok-comment {
+  color: rgb(var(--s-comment));
+  font-style: italic;
+}
+.tok-string {
+  color: rgb(var(--s-string));
+}
+.tok-number {
+  color: rgb(var(--s-number));
+}
+.tok-keyword {
+  color: rgb(var(--s-keyword));
+}
+.tok-type {
+  color: rgb(var(--s-type));
+}
+.tok-function {
+  color: rgb(var(--s-function));
+}
+.tok-property {
+  color: rgb(var(--s-property));
+}
+.tok-operator {
+  color: rgb(var(--s-operator));
+}
+.tok-punctuation {
+  color: rgb(var(--s-punctuation));
+}
+.tok-regexp {
+  color: rgb(var(--s-regexp));
+}
+.tok-tag {
+  color: rgb(var(--s-tag));
+}
+.tok-attr {
+  color: rgb(var(--s-attr));
+}
+
+@layer base {
+  html {
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg text-text;
+  }
+
+  ::selection {
+    @apply bg-accent/30 text-text;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--c-border)) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Rendered markdown preview */
+  .md-preview > *:first-child {
+    margin-top: 0;
+  }
+  .md-preview h1,
+  .md-preview h2,
+  .md-preview h3,
+  .md-preview h4,
+  .md-preview h5,
+  .md-preview h6 {
+    @apply font-semibold text-text mt-4 mb-2 leading-snug;
+  }
+  .md-preview h1 {
+    @apply text-xl border-b border-border pb-1;
+  }
+  .md-preview h2 {
+    @apply text-lg border-b border-border pb-1;
+  }
+  .md-preview h3 {
+    @apply text-base;
+  }
+  .md-preview h4,
+  .md-preview h5,
+  .md-preview h6 {
+    @apply text-sm;
+  }
+  .md-preview p {
+    @apply my-2 leading-relaxed;
+  }
+  .md-preview a {
+    @apply text-accent underline underline-offset-2;
+  }
+  .md-preview strong {
+    @apply font-semibold text-text;
+  }
+  .md-preview em {
+    @apply italic;
+  }
+  .md-preview del {
+    @apply line-through text-subtle;
+  }
+  .md-preview ul {
+    @apply list-disc pl-5 my-2 space-y-1;
+  }
+  .md-preview ol {
+    @apply list-decimal pl-5 my-2 space-y-1;
+  }
+  .md-preview li > ul,
+  .md-preview li > ol {
+    @apply my-1;
+  }
+  .md-preview blockquote {
+    @apply border-l-2 border-border pl-3 my-2 text-subtle italic;
+  }
+  .md-preview hr {
+    @apply my-4 border-border;
+  }
+  .md-preview code {
+    @apply rounded bg-hover px-1 py-0.5 text-[0.85em];
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  .md-preview pre {
+    @apply rounded-lg border border-border bg-hover/50 p-3 my-2 overflow-x-auto text-xs leading-5;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  .md-preview pre code {
+    @apply bg-transparent p-0 text-xs;
+  }
+  .md-preview table {
+    @apply my-2 w-full border-collapse text-sm;
+  }
+  .md-preview th,
+  .md-preview td {
+    @apply border border-border px-2 py-1 text-left align-top;
+  }
+  .md-preview th {
+    @apply bg-hover font-semibold;
+  }
+  .md-preview img {
+    @apply max-w-full rounded;
+  }
+  .md-preview input[type='checkbox'] {
+    @apply mr-1 align-middle;
+  }
+  .md-preview .task-list {
+    @apply list-none pl-1;
+  }
+}

@@ -11,7 +11,9 @@ function Base64DecodeUtil() {
 
   useEffect(() => {
     try {
-      const decoded = atob(encodedText)
+      const binary = atob(encodedText)
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0))
+      const decoded = new TextDecoder('utf-8').decode(bytes)
       setDecodedText(decoded)
     } catch (error) {
       setDecodedText('Error decoding from base64')

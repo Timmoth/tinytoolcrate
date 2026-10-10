@@ -24,7 +24,7 @@ function AlarmUtil() {
 
       if (diff <= 0) {
         clearInterval(interval)
-        alarmSound.play()
+        alarmSound.play().catch(() => {})
         setIsRunning(false)
         setRemainingTime(null)
       } else {
@@ -72,11 +72,16 @@ function AlarmUtil() {
   return (
     <div className="flex flex-col items-center space-y-6">
       {/* Target Time Selection */}
-      <div className="flex items-center space-x-4 text-3xl font-bold">
+      <div className="flex items-center space-x-4 text-2xl font-semibold">
         {['Hours', 'Minutes', 'Seconds'].map((label, index) => (
-          <div key={index} className="flex flex-col items-center space-y-2">
+          <div
+            key={index}
+            data-testid="stepper"
+            data-stepper={label.toLowerCase()}
+            className="flex flex-col items-center space-y-1"
+          >
             <button
-              className="text-sm"
+              className="w-9 h-7 rounded-md border border-border text-subtle hover:bg-hover hover:text-text transition-colors"
               onClick={() => {
                 const currentValue =
                   label === 'Hours'
@@ -92,7 +97,10 @@ function AlarmUtil() {
             >
               ▲
             </button>
-            <span>
+            <span
+              data-testid="stepper-value"
+              className="tabular-nums text-text"
+            >
               {label === 'Hours'
                 ? formatNumber(targetTime?.getHours() ?? currentTime.getHours())
                 : label === 'Minutes'
@@ -104,7 +112,7 @@ function AlarmUtil() {
                   )}
             </span>
             <button
-              className="text-sm"
+              className="w-9 h-7 rounded-md border border-border text-subtle hover:bg-hover hover:text-text transition-colors"
               onClick={() => {
                 const currentValue =
                   label === 'Hours'
@@ -125,21 +133,26 @@ function AlarmUtil() {
       </div>
 
       {remainingTime && (
-        <div className="text-lg font-bold">{remainingTime}</div>
+        <div
+          data-testid="remaining-time"
+          className="text-lg font-semibold tabular-nums text-text"
+        >
+          {remainingTime}
+        </div>
       )}
 
-      <div className="space-x-4">
+      <div className="space-x-2">
         <button
           onClick={handleStart}
           disabled={isRunning || !targetTime || targetTime <= currentTime}
-          className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 disabled:opacity-50"
+          className="px-4 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-500 disabled:opacity-40 transition-colors"
         >
           Start
         </button>
         <button
           onClick={handleStop}
           disabled={!isRunning}
-          className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600 disabled:opacity-50"
+          className="px-4 py-1.5 text-sm font-medium text-text border border-border rounded-lg hover:bg-hover disabled:opacity-40 transition-colors"
         >
           Stop
         </button>

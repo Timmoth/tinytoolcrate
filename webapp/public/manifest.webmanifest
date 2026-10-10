@@ -1,0 +1,17 @@
+{
+  "name": "tinytoolcrate",
+  "short_name": "tinytoolcrate",
+  "description": "A collection of tiny developer productivity tools",
+  "url": "https://tinytoolcrate.com/",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

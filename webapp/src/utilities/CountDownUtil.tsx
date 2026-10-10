@@ -1,141 +1,154 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import alarm from '../assets/alarm.wav'
 
 const alarmSound = new Audio(alarm)
 
+type Timer = {
+  hours: number
+  minutes: number
+  seconds: number
+}
+
+const ZERO: Timer = { hours: 0, minutes: 0, seconds: 0 }
+
 function CountdownTimer() {
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+  const [time, setTime] = useState<Timer>(ZERO)
   const [isRunning, setIsRunning] = useState(false)
 
-  const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout> | null>(
-    null
-  )
+  useEffect(() => {
+    if (!isRunning) return
 
-  const increment = (
-    setter: React.Dispatch<React.SetStateAction<number>>,
-    value: number,
-    max: number
-  ) => {
-    setter((prev) => (prev + value + max + 1) % (max + 1))
-  }
+    const intervalId = setInterval(() => {
+      setTime(({ hours, minutes, seconds }) => {
+        if (seconds > 0) return { hours, minutes, seconds: seconds - 1 }
+        if (minutes > 0) return { hours, minutes: minutes - 1, seconds: 59 }
+        if (hours > 0) return { hours: hours - 1, minutes: 59, seconds: 59 }
+        return ZERO
+      })
+    }, 1000)
 
-  const decrement = (
-    setter: React.Dispatch<React.SetStateAction<number>>,
-    value: number,
-    max: number
-  ) => {
-    setter((prev) => (prev - value + max + 1) % (max + 1))
+    return () => clearInterval(intervalId)
+  }, [isRunning])
+
+  useEffect(() => {
+    if (
+      isRunning &&
+      time.hours === 0 &&
+      time.minutes === 0 &&
+      time.seconds === 0
+    ) {
+      alarmSound.play().catch(() => {})
+      setIsRunning(false)
+    }
+  }, [isRunning, time])
+
+  const adjust = (field: keyof Timer, delta: number, max: number) => {
+    setTime((prev) => ({
+      ...prev,
+      [field]: (prev[field] + delta + max + 1) % (max + 1),
+    }))
   }
 
   const handleStart = () => {
-    if (isRunning || (hours === 0 && minutes === 0 && seconds === 0)) return
+    if (isRunning || (time.hours === 0 && time.minutes === 0 && time.seconds === 0))
+      return
 
     setIsRunning(true)
-    setTimerId(
-      setInterval(() => {
-        setSeconds((prev) => {
-          if (prev === 0) {
-            setMinutes((m) => {
-              if (m === 0) {
-                setHours((h) => {
-                  if (h === 0) {
-                    alarmSound.play()
-                    setHours(0)
-                    setMinutes(0)
-                    setSeconds(0)
-                    return h
-                  }
-                  return h - 1
-                })
-                return 59
-              }
-              return m - 1
-            })
-            return 59
-          }
-          return prev - 1
-        })
-      }, 1000)
-    )
   }
 
   const handleStop = () => {
     alarmSound.pause()
     alarmSound.currentTime = 0
-    if (timerId) clearInterval(timerId)
     setIsRunning(false)
-    setTimerId(null)
   }
 
   const handleReset = () => {
     alarmSound.pause()
     alarmSound.currentTime = 0
-    if (timerId) clearInterval(timerId)
     setIsRunning(false)
-    setTimerId(null)
-    setHours(0)
-    setMinutes(0)
-    setSeconds(0)
+    setTime(ZERO)
   }
 
   const formatNumber = (num: number) => String(num).padStart(2, '0')
 
+  const presets = [1, 3, 5, 10, 25]
+
   return (
     <div className="flex flex-col items-center space-y-6">
-      <div className="flex items-center space-x-4 text-3xl font-bold">
-        {['Hours', 'Minutes', 'Seconds'].map((label, index) => (
-          <div key={index} className="flex flex-col items-center space-y-2">
+      <div className="flex items-center gap-2">
+        {presets.map((mins) => (
+          <button
+            key={mins}
+            type="button"
+            data-testid={`preset-${mins}`}
+            disabled={isRunning}
+            onClick={() =>
+              setTime({
+                hours: Math.floor(mins / 60),
+                minutes: mins % 60,
+                seconds: 0,
+              })
+            }
+            className="px-2.5 py-1 text-xs font-medium rounded-md border border-border text-subtle hover:bg-hover hover:text-text disabled:opacity-40 transition-colors"
+          >
+            {mins}m
+          </button>
+        ))}
+      </div>
+      <div className="flex items-center space-x-4 text-2xl font-semibold">
+        {(
+          [
+            ['Hours', 'hours', 23],
+            ['Minutes', 'minutes', 59],
+            ['Seconds', 'seconds', 59],
+          ] as const
+        ).map(([label, field, max]) => (
+          <div
+            key={label}
+            data-testid="stepper"
+            data-stepper={field}
+            className="flex flex-col items-center space-y-1"
+          >
             <button
-              className="text-sm"
-              onClick={() => {
-                if (label === 'Hours') increment(setHours, 1, 23)
-                else if (label === 'Minutes') increment(setMinutes, 1, 59)
-                else increment(setSeconds, 1, 59)
-              }}
+              className="w-9 h-7 rounded-md border border-border text-subtle hover:bg-hover hover:text-text transition-colors"
+              onClick={() => adjust(field, 1, max)}
             >
               ▲
             </button>
-            <span>
-              {label === 'Hours'
-                ? formatNumber(hours)
-                : label === 'Minutes'
-                ? formatNumber(minutes)
-                : formatNumber(seconds)}
+            <span
+              data-testid="stepper-value"
+              className="tabular-nums text-text"
+            >
+              {formatNumber(time[field])}
             </span>
             <button
-              className="text-sm"
-              onClick={() => {
-                if (label === 'Hours') decrement(setHours, 1, 23)
-                else if (label === 'Minutes') decrement(setMinutes, 1, 59)
-                else decrement(setSeconds, 1, 59)
-              }}
+              className="w-9 h-7 rounded-md border border-border text-subtle hover:bg-hover hover:text-text transition-colors"
+              onClick={() => adjust(field, -1, max)}
             >
               ▼
             </button>
           </div>
         ))}
       </div>
-      <div className="space-x-4">
+      <div className="space-x-2">
         <button
           onClick={handleStart}
           disabled={isRunning}
-          className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 disabled:opacity-50"
+          className="px-4 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-500 disabled:opacity-40 transition-colors"
         >
           Start
         </button>
         <button
           onClick={handleStop}
           disabled={!isRunning}
-          className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600 disabled:opacity-50"
+          className="px-4 py-1.5 text-sm font-medium text-text border border-border rounded-lg hover:bg-hover disabled:opacity-40 transition-colors"
         >
           Stop
         </button>
         <button
           onClick={handleReset}
-          disabled={hours == 0 && minutes == 0 && seconds == 0}
-          className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600 disabled:opacity-50"
+          disabled={time.hours === 0 && time.minutes === 0 && time.seconds === 0}
+          className="px-4 py-1.5 text-sm font-medium text-text border border-border rounded-lg hover:bg-hover disabled:opacity-40 transition-colors"
         >
           Reset
         </button>

@@ -7,12 +7,20 @@ function FindAndReplaceUtil() {
 
   const [findTerm, setFindTerm] = useState<string>('')
   const [replaceTerm, setReplaceTerm] = useState<string>('')
+  const [matchCount, setMatchCount] = useState<number>(0)
 
   useEffect(() => {
     if (findTerm) {
-      const regex = new RegExp(findTerm, 'g')
-      setOutputText(inputText.replace(regex, replaceTerm))
+      try {
+        const regex = new RegExp(findTerm, 'g')
+        setMatchCount((inputText.match(regex) ?? []).length)
+        setOutputText(inputText.replace(regex, replaceTerm))
+      } catch {
+        setMatchCount(0)
+        setOutputText(inputText)
+      }
     } else {
+      setMatchCount(0)
       setOutputText(inputText)
     }
   }, [inputText, findTerm, replaceTerm])
@@ -42,6 +50,13 @@ function FindAndReplaceUtil() {
           content={replaceTerm}
           onContentChange={setReplaceTerm}
           isReadonly={false}
+          isCopyable={false}
+          isMultiline={false}
+        />
+        <TextField
+          label="replacements"
+          content={matchCount.toString()}
+          isReadonly={true}
           isCopyable={false}
           isMultiline={false}
         />

@@ -13,7 +13,7 @@ function FormatJsonUtil() {
     try {
       const parsed = JSON.parse(newInput)
       setFormattedJson(JSON.stringify(parsed, null, 2))
-    } catch (e) {
+    } catch {
       setFormattedJson('')
       setError('Invalid JSON')
     }
@@ -30,7 +30,7 @@ function FormatJsonUtil() {
         isMultiline={true}
       />
 
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {error && <div className="text-sm text-red-600 dark:text-red-400">{error}</div>}
 
       <TextField
         label="Formatted JSON"

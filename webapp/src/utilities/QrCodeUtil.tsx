@@ -6,6 +6,7 @@ const QRCodeGenerator: React.FC = () => {
   const [qrCodeContent, setQrCodeContent] = useState<string>(
     'https://tinytoolcrate.com/'
   )
+  const [size, setSize] = useState<number>(256)
   const qrCodeId = useMemo(() => `QRCode-${Date.now()}-${Math.random()}`, [])
 
   const handleDownloadClicked = () => {
@@ -42,12 +43,33 @@ const QRCodeGenerator: React.FC = () => {
         isCopyable={true}
         isMultiline={false}
       />
-      <QRCode id={qrCodeId} value={qrCodeContent} />
+      <div className="flex items-center gap-2">
+        <span className="text-[11px] font-medium uppercase tracking-wider text-subtle">
+          size
+        </span>
+        <select
+          data-testid="qr-size"
+          aria-label="QR code size"
+          value={size}
+          onChange={(e) => setSize(Number(e.target.value))}
+          className="text-sm rounded-lg border border-border bg-input px-2 py-1.5 text-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+        >
+          <option value={128}>128px</option>
+          <option value={256}>256px</option>
+          <option value={512}>512px</option>
+        </select>
+      </div>
+      <div
+        data-testid="qr-code"
+        className="rounded-lg overflow-hidden ring-1 ring-border"
+      >
+        <QRCode id={qrCodeId} value={qrCodeContent} size={size} />
+      </div>
 
       <button
         onClick={() => handleDownloadClicked()}
         type="button"
-        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        className="text-sm font-medium rounded-lg border border-border px-3 py-1.5 text-subtle hover:bg-hover hover:text-text transition-colors"
       >
         Download
       </button>

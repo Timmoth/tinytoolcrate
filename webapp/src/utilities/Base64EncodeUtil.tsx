@@ -11,7 +11,12 @@ function Base64EncodeUtil() {
 
   useEffect(() => {
     try {
-      const encoded = btoa(currentText)
+      const bytes = new TextEncoder().encode(currentText)
+      let binary = ''
+      for (const byte of bytes) {
+        binary += String.fromCharCode(byte)
+      }
+      const encoded = btoa(binary)
       setEncodedText(encoded)
     } catch (error) {
       setEncodedText('Error encoding to base64')

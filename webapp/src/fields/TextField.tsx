@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useId, useState } from 'react'
+import { showToast } from '../components/Toast'
 
 function TextField({
   label,
@@ -18,12 +19,15 @@ function TextField({
   isMultiline: boolean
 }) {
   const [copied, setCopied] = useState<boolean>(false)
+  // Ties the visible label to the control so it has an accessible name.
+  const id = useId()
 
   const copyToClipboard = () => {
     navigator.clipboard
       .writeText(content)
       .then(() => {
         setCopied(true)
+        showToast('Copied to clipboard')
         setTimeout(() => {
           setCopied(false)
         }, 1000)
@@ -48,24 +52,35 @@ function TextField({
     }
   }
 
+  const inputClasses = `w-full text-sm rounded-lg border bg-input px-3 py-2 text-text placeholder-faint focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors ${
+    isReadonly
+      ? 'border-border/60 text-subtle font-mono'
+      : 'border-border'
+  }`
+
   return (
-    <div className="w-full relative">
-      {/* Label and Copy Button positioned along the top border */}
-      <div className="relative flex items-center">
-        <label className="absolute text-sm text-gray-400 bg-gray-700 px-1 z-10 left-2.5 top-0 -translate-y-1/2">
+    <div
+      className="w-full"
+      data-testid="field"
+      data-field-label={label}
+    >
+      <div className="flex items-center justify-between mb-1 min-h-5">
+        <label
+          htmlFor={id}
+          className="text-[11px] font-medium uppercase tracking-wider text-subtle"
+        >
           {label}
         </label>
 
-        {/* Copy Button */}
         {isCopyable && (
           <button
             onClick={copyToClipboard}
-            className="bg-gray-700 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:bg-gray-800 rounded-md p-1"
             aria-label="Copy to clipboard"
+            className="p-1 rounded text-faint hover:text-text hover:bg-hover transition-colors"
           >
             {copied ? (
               <svg
-                className="w-3.5 h-3.5 text-blue-500"
+                className="w-3.5 h-3.5 text-emerald-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -94,10 +109,11 @@ function TextField({
         )}
       </div>
 
-      {/* Input Field */}
       {isMultiline ? (
         <textarea
-          className="border text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 text-gray-400"
+          id={id}
+          className={inputClasses}
+          data-testid="field-input"
           value={content}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
@@ -107,7 +123,9 @@ function TextField({
       ) : (
         <input
           type="text"
-          className="border text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 text-gray-400"
+          id={id}
+          className={inputClasses}
+          data-testid="field-input"
           value={content}
           onChange={handleChange}
           onKeyUp={handleKeyUp}

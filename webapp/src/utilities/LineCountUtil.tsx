@@ -5,6 +5,7 @@ function LineCountUtil() {
   const [currentText, setCurrentText] = useState<string>('')
   const [lineCount, setLineCount] = useState<number>(0)
   const [wordCount, setWordCount] = useState<number>(0)
+  const [charCount, setCharCount] = useState<number>(0)
 
   const handleContentChange = (newContent: string) => {
     setCurrentText(newContent)
@@ -14,6 +15,7 @@ function LineCountUtil() {
     setLineCount(currentText.split(/\r\n|\r|\n/).length)
     const words = currentText.trim().match(/\b\w+\b/g)
     setWordCount(words ? words.length : 0)
+    setCharCount(currentText.length)
   }, [currentText])
 
   return (
@@ -37,6 +39,13 @@ function LineCountUtil() {
         <TextField
           label="words"
           content={wordCount.toString()}
+          isReadonly={true}
+          isCopyable={false}
+          isMultiline={false}
+        />
+        <TextField
+          label="chars"
+          content={charCount.toString()}
           isReadonly={true}
           isCopyable={false}
           isMultiline={false}

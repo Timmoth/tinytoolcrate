@@ -1,13 +1,78 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>tinytoolcrate</title>
+    <meta name="theme-color" content="#09090b" />
+
+    <title>tinytoolcrate — free developer utilities</title>
+    <meta
+      name="description"
+      content="75 free developer tools that run entirely in your browser: zip and gzip, image converter, EXIF viewer, subnet calculator, contrast checker, colour and unit converters, emoji picker, markdown editor, AES and RSA encryption, base64, JWT encode/decode, JSON formatter, CSV to JSON, regex tester, hash generator, UUID v4/v7, QR codes, TOTP 2FA codes, timestamps, diff, and more. No sign-up, no uploads, works offline."
+    />
+    <meta name="author" content="timmoth" />
+    <link rel="canonical" href="https://tinytoolcrate.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="tinytoolcrate" />
+    <meta property="og:title" content="tinytoolcrate — free developer utilities" />
+    <meta
+      property="og:description"
+      content="75 free developer tools that run entirely in your browser. No sign-up, no uploads, works offline."
+    />
+    <meta property="og:url" content="https://tinytoolcrate.com/" />
+    <meta property="og:image" content="https://tinytoolcrate.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="tinytoolcrate — free developer utilities" />
+    <meta
+      name="twitter:description"
+      content="75 free developer tools that run entirely in your browser. No sign-up, no uploads, works offline."
+    />
+    <meta name="twitter:image" content="https://tinytoolcrate.com/og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "tinytoolcrate",
+        "url": "https://tinytoolcrate.com/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (web browser)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "A free collection of 75 developer utilities that run entirely in the browser: compression and archives, image conversion, networking, accessibility, markdown, encryption, encoding, JSON, JWT, hashing, regex, UUID, QR codes, TOTP, timestamps, diff, and more.",
+        "creator": { "@type": "Person", "name": "timmoth", "url": "https://timmoth.com" }
+      }
+    </script>
+
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.classList.remove('dark')
+        }
+      } catch (e) {}
+    </script>
   </head>
-  <body class="bg-gray-800">
+  <body>
     <div id="root"></div>
+    <noscript>
+      <h1>tinytoolcrate — free developer utilities</h1>
+      <p>
+        75 free developer tools that run entirely in your browser. No sign-up,
+        no uploads, works offline.
+        <a href="https://tinytoolcrate.com/">tinytoolcrate.com</a>
+      </p>
+      <ul>
+        <li>Text: base64 encode/decode, url encode/decode, text stats, find and replace, count occurrences, escape/unescape string, case converter, html entities, text diff, line tools</li>
+        <li>JSON: jwt decode, jwt encode, format json, json minify, csv / json</li>
+        <li>File: sha file checksum, base64 file, image viewer</li>
+        <li>Time: unix time, clock, countdown, alarm, timestamp converter</li>
+        <li>Code: regex tester, hash generator, base converter, cron explain, url parser</li>
+        <li>Misc: guid generator (uuid v4/v7), public ip, qr code, plot graph, calculator, color picker, password generator, totp generator</li>
+      </ul>
+      <p>Built by <a href="https://timmoth.com">timmoth</a>.</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

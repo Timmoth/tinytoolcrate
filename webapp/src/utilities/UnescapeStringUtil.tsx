@@ -14,8 +14,8 @@ function UnescapeStringUtil() {
       const decoded = JSON.parse(`"${encodedText}"`)
       setDecodedText(decoded)
     } catch (error) {
-      setDecodedText('Error decoding from base64')
-      console.error('Error decoding from base64:', error)
+      setDecodedText('Error decoding string')
+      console.error('Error decoding string:', error)
     }
   }, [encodedText])
 

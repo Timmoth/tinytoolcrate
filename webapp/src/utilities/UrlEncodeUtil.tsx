@@ -14,8 +14,8 @@ function UrlEncodeUtil() {
       const encoded = encodeURIComponent(currentText)
       setEncodedText(encoded)
     } catch (error) {
-      setEncodedText('Error encoding to base64')
-      console.error('Error encoding to base64:', error)
+      setEncodedText('Error encoding url')
+      console.error('Error encoding url:', error)
     }
   }, [currentText])
 

@@ -14,8 +14,8 @@ function UrlDecodeUtil() {
       const decoded = decodeURIComponent(encodedText)
       setDecodedText(decoded)
     } catch (error) {
-      setDecodedText('Error decoding from base64')
-      console.error('Error decoding from base64:', error)
+      setDecodedText('Error decoding url')
+      console.error('Error decoding url:', error)
     }
   }, [encodedText])
 
